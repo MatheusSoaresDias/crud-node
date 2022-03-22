@@ -1,13 +1,10 @@
 const express = require('express');
-const userController = require('./src/controller/UserController');
+const authMiddleware = require('./src/middleware/auth');
 
 const app = express();
 
+app.use( authMiddleware );
 app.use( express.json() );
-
-app.get( '/list', userController.index );
-app.post( '/create', userController.create );
-app.put( '/update', userController.update );
-app.delete( '/delete/:id', userController.delete );
+app.use( require( './routes' ) );
 
 app.listen( 3333 );
